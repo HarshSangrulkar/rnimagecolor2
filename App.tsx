@@ -12,7 +12,7 @@ import LocalImage from './src/LocalImage'
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>App</Text>
+      {/* <Text>App</Text> */}
       {/* <MyComponent></MyComponent> */}
       {/* <MyCompJs></MyCompJs> */}
       {/* <UseImageColors></UseImageColors> */}
@@ -30,7 +30,7 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   }
 })
