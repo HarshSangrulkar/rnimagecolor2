@@ -1,49 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { getColors, ImageColorsResult } from 'react-native-image-colors';
 
-const MyComponent = () => {
-    const imageUrl = 'https://i.imgur.com/68jyjZT.jpg';
-    const [colors, setColors] = useState<ImageColorsResult>();
 
+const resortImage = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/05/c1/fb/resort-rio.jpg'
+const MyComponent = () => {
     useEffect(() => {
-        const fetchImageColors = async () => {
+        const [colors, setColors] = useState<ImageColorsResult>();
+        const fetchColors = async () => {
             try {
-                const result = await getColors(imageUrl, {
+                const result: ImageColorsResult = await getColors(resortImage, {
                     fallback: '#000000',
                     cache: true,
-                    key: imageUrl,
+                    key: resortImage,
                 });
-                console.warn(result);
+                // console.warn(result);
+                // console.log(result);
                 setColors(result);
             } catch (error) {
-                console.error('Error fetching image colors:', error);
+                console.error('Error fetching colors:', error);
             }
         };
-
-        fetchImageColors();
-    }, [imageUrl]);
-
+        fetchColors();
+    }, []);
     return (
-        <View>
-            <Image source={{ uri: imageUrl }} />
-            <View>
-                {colors?.platform === 'android' && (
-                    <View>
-                        <View style={{ backgroundColor: colors.vibrant, flex: 1, padding: 10 }}>
-                            <Text>Vibrant</Text>
-                        </View>
-                        <View style={{ backgroundColor: colors.muted, flex: 1, padding: 10 }}>
-                            <Text>Muted</Text>
-                        </View>
-                    </View>
-                )}
-            </View>
-        </View>
-    );
-};
+        <ScrollView>
+            {colors?.platform === 'android' && (
+                <View>
+                    <Image source={{ uri: resortImage }} style={{ width: Dimensions.get('screen').width, height: 400 }} />
+                </View>
+            )}
+        </ScrollView>
+    )
+}
 
-const styles = StyleSheet.create({
-});
+export default MyComponent
 
-export default MyComponent;
+const styles = StyleSheet.create({})
