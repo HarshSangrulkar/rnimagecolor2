@@ -259,10 +259,10 @@ const LocalImage = () => {
             <View style={styles.imageContainer}>
                 {colors4?.platform === 'android' && (
                     <View>
-                        <Image source={resortImage} style={{ width: 'auto', height: 400 }} />
+                        <Image source={resortImage} style={{ width: 'auto', height: 300 }} />
                         <View style={{ height: 150 }}>
                             {/* start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} */}
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} locations={[0.2, 0.4, 1]} colors={[colors4.average, colors4.darkMuted, colors4.darkVibrant]} style={[StyleSheet.absoluteFillObject]} />
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} colors={[colors4.average, colors4.vibrant]} style={[StyleSheet.absoluteFillObject]} />
                         </View>
                     </View>
                 )}
@@ -270,20 +270,24 @@ const LocalImage = () => {
             <View style={styles.imageContainer}>
                 {colors4?.platform === 'android' && (
                     <View>
-                        <Image source={resortImage} style={{ width: 'auto', height: 400 }} />
+                        <Image source={resortImage} style={{ width: 'auto', height: 300 }} />
                         <View style={{ height: 150 }}>
                             {/* start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} */}
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} locations={[0.2, 0.4, 1]} colors={[colors4.average, colors4.darkMuted, colors4.darkVibrant]} style={[StyleSheet.absoluteFillObject]} />
+                            <LinearGradient start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }} useAngle={true} colors={[colors4.average, colors4.vibrant]} style={[StyleSheet.absoluteFillObject]} />
                         </View>
-                        <View style={{ height: 150 }}>
-                            <RadialGradient style={{ width: 200, height: 200 }}
-                                colors={['black', 'green', 'blue', 'red']}
-                                stops={[0.1, 0.4, 0.3, 0.75]}
+                        {/* <View >
+                            <RadialGradient style={[{ width: '100%', height: 200 }, StyleSheet.absoluteFillObject]}
+                                colors={[colors4.average, colors4.darkMuted, colors4.darkVibrant, colors4.average]}
                                 center={[100, 100]}
                                 radius={200}>
 
                             </RadialGradient>
-                        </View>
+                            <RadialGradient style={{ width: '100%', height: 200, }}
+                                colors={[colors4.average, colors4.darkMuted, colors4.darkVibrant, colors4.average]}
+                                center={[150, 150]}
+                                radius={200}>
+                            </RadialGradient>
+                        </View> */}
                     </View>
                 )}
             </View>
@@ -303,7 +307,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         borderRadius: 10,
-        margin: 10,
+        margin: 15,
         overflow: 'hidden',
     }
 })
