@@ -11,6 +11,7 @@ import LocalImage from './src/LocalImage'
 import BlurImageEx from './src/BlurImageEx'
 import ExcOffers from './src/ExcOffers'
 import ExcOfferParent from './src/ExcOfferParent'
+import ExclusiveOffersParent from './src/ExclusiveOffersParent'
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
       {/* <ImgClr></ImgClr> */}
       {/* <LocalImage></LocalImage> */}
       {/* <BlurImageEx></BlurImageEx> */}
-      <ExcOfferParent></ExcOfferParent>
+      {/* <ExcOfferParent></ExcOfferParent> */}
+      <ExclusiveOffersParent></ExclusiveOffersParent>
     </SafeAreaView>
   )
 }
@@ -37,5 +39,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
+    backgroundColor: 'white'
   }
 })

@@ -12,11 +12,11 @@ const ExcOffers = ({ name, desc, icon, bgColor }: ExcOffersProps) => {
     return (
         <View>
             <View style={styles.box}>
-                {/* <View style={styles.iconBorderContainer}> */}
-                <View style={styles.iconContainer}>
-                    {icon}
+                <View style={styles.iconBorderContainer}>
+                    <View style={styles.iconContainer}>
+                        {icon}
+                    </View>
                 </View>
-                {/* </View> */}
                 <View style={[styles.cardContainer, { backgroundColor: bgColor }]}>
                     <Text style={styles.text}>{name}</Text>
                     <View style={styles.btnContainer}>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         // borderBlockColor: 'black',
         padding: 10,
-        margin: 10,
+        margin: 5,
         width: 200,
         height: 200,
         alignItems: 'center',
@@ -50,6 +50,20 @@ const styles = StyleSheet.create({
         // backgroundColor:
     },
     iconBorderContainer: {
+        width: 92,
+        height: 92,
+        borderRadius: 46,
+        // backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: -42,
+        zIndex: 2,
+        // padding: 10,
+        // borderBlockColor: 'white',
+        borderColor: 'white',
+        borderWidth: 2,
+        borderStyle: 'dashed'
     },
     iconContainer: {
         width: 80,
@@ -58,22 +72,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute',
-        top: -30,
-        zIndex: 1,
+        // position: 'absolute',
+        // top: -30,
+        // zIndex: 1,
         padding: 10,
-        borderBlockColor: 'black',
-        borderWidth: 1,
+        // borderBlockColor: 'black',
+        // borderWidth: 1,
     },
     text: {
         fontSize: 18,
         flexWrap: 'wrap',
         flexShrink: 1,
         color: 'white',
-        fontWeight: '600',
+        fontWeight: '800',
         marginHorizontal: 20,
-        padding: 5,
+        // padding: 10,
         textAlign: 'center',
+        fontFamily: 'Arial'
     },
     btnContainer: {
         backgroundColor: 'white',
@@ -88,7 +103,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexShrink: 1,
         color: 'black',
-        fontWeight: '400',
+        fontWeight: '600',
         textAlign: 'center',
+        fontFamily: 'sans-serif'
     }
 })
