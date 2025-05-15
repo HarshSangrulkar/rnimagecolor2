@@ -1,129 +1,77 @@
-/**
- * Basic [iOS] Example for react-native-blur
- * https://github.com/react-native-community/react-native-blur
- */
-import React, { useState, useCallback } from 'react';
-import {
-    Image,
-    StyleSheet,
-    Platform,
-    Switch,
-    Text,
-    View,
-    SafeAreaView,
-    Dimensions,
-} from 'react-native';
+import React, { useRef } from 'react';
+import { View, Dimensions, StyleSheet, Image, Text } from 'react-native';
+import Carousel, { TCarouselProps } from 'react-native-reanimated-carousel';
+import ParallaxImage from 'react-native-reanimated-carousel'
+import Animated, { useAnimatedStyle, interpolate, withTiming } from 'react-native-reanimated';
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-import {
-    BlurView,
-} from '@react-native-community/blur';
+const data = [
+    { id: '1', image: 'https://placeimg.com/640/480/nature', title: 'Nature 1', description: 'Description for nature 1' },
+    { id: '2', image: 'https://placeimg.com/640/480/animals', title: 'Animals 1', description: 'Description for animals 1' },
+    { id: '3', image: 'https://placeimg.com/640/480/people', title: 'People 1', description: 'Description for people 1' },
+];
 
-const Blurs = () => {
-    //   const [blurBlurType, setBlurBlurType] = useState<BlurViewProps['blurType']>('light');
-    const [blurActiveSegment, setBlurActiveSegment] = useState(1);
-    //   const [vibrancyBlurType, setVibrancyBlurType] =useState<BlurViewProps['blurType']>('dark');
-    const [vibrancyActiveSegment, setVibrancyActiveSegment] = useState(2);
+const BlurParallaxCarousel = () => {
+    const carouselRef = useRef(null);
 
-    const onBlurChange = useCallback(
-        (e) => setBlurActiveSegment(e.nativeEvent.selectedSegmentIndex),
-        []
-    );
-    const onBlurValueChange = useCallback((value) => setBlurBlurType(value), []);
-    const onVibrancyChange = useCallback(
-        (e) => setVibrancyActiveSegment(e.nativeEvent.selectedSegmentIndex),
-        []
-    );
-    const onVibrancyValueChange = useCallback(
-        (value) => setVibrancyBlurType(value),
-        []
-    );
-
-    const tintColor = blurBlurType === 'xlight' ? 'black' : 'white';
-    const platform = Platform.OS === 'ios' ? 'iOS' : 'Android';
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.blurContainer}>
-                {/*
-             BlurView is supported on both iOS and Android.
-             If you also need to support Android, the BlurView must be
-             absolutely positioned behind your unblurred views, and it
-             cannot contain any child views.
-           */}
-                <BlurView
-                    blurType={blurBlurType}
-                    blurAmount={100}
-                    reducedTransparencyFallbackColor={'pink'}
-                    style={[styles.blurView]}
+    const renderItem = ({ item, index }: any, parallaxProps: React.JSX.IntrinsicAttributes & React.PropsWithChildren<TCarouselProps<unknown>>) => {
+        return (
+            <View style={styles.itemContainer}>
+                <ParallaxImage
+                    source={{ uri: item.image }}
+                    style={styles.image}
+                    parallaxFactor={0.4}
+                    {...parallaxProps}
                 />
-                <Text style={[styles.text, { color: tintColor }]}>
-                    Blur component ({platform})
-                </Text>
-                <SegmentedControl
-                    values={blurTypeValues}
-                    selectedIndex={blurActiveSegment}
-                    onChange={(event) => {
-                        onBlurChange(event);
-                    }}
-                    onValueChange={(value) => {
-                        onBlurValueChange(value);
-                    }}
-                    tintColor={tintColor}
-                />
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.description}>{item.description}</Text>
+                </View>
             </View>
+        );
+    };
 
-            {
-                /*
-                  VibrancyView is only supported on iOS, and must contain child views,
-                  otherwise the vibrancy effect doesn't work.
-                */
-                Platform.OS === 'ios' ? (
-                    <VibrancyView
-                        blurType={vibrancyBlurType}
-                        blurAmount={10}
-                        reducedTransparencyFallbackColor={'pink'}
-                        style={[styles.container, styles.blurContainer]}
-                    >
-                        <Text style={styles.text}>Vibrancy component (iOS-only)</Text>
+    const animatedBlurStyle = (index, animatedValue) => {
+        const inputRange = [(index - 2), (index - 1), index, (index + 1), (index + 2)];
+        const outputRange = [20, 10, 0, 10, 20];
 
-                        <SegmentedControl
-                            values={blurTypeValues}
-                            selectedIndex={vibrancyActiveSegment}
-                            onChange={(event) => {
-                                onVibrancyChange(event);
-                            }}
-                            onValueChange={(value) => {
-                                onVibrancyValueChange(value);
-                            }}
-                            tintColor="white"
-                        />
-                    </VibrancyView>
-                ) : null
-            }
-        </SafeAreaView>
-    );
-};
+        const blurRadius = useAnimatedStyle(() => {
+            const animatedBlur = interpolate(animatedValue.value, inputRange, outputRange);
+            return {
+                blurRadius: withTiming(animatedBlur, { duration: 300 }),
+            };
+        });
 
-const Example = () => {
-    const [showBlurs, setShowBlurs] = React.useState(true);
+        return blurRadius;
+    };
 
     return (
         <View style={styles.container}>
-            <Image
-                source={require('./bgimage.jpeg')}
-                resizeMode="cover"
-                style={styles.img}
+            <Carousel
+                ref={carouselRef}
+                data={data}
+                renderItem={renderItem}
+                sliderWidth={screenWidth}
+                itemWidth={screenWidth - 80}
+                containerWidth={screenWidth}
+                inactiveSlideShift={0}
+                useScrollView={true}
+                loop
+                autoplay
+                autoplayInterval={3000}
+                parallaxConfig={{
+                    scale: 0.8,
+                    opacity: 0.8,
+                }}
+                animated={true}
+                onSnapToItem={(index) => {
+                    if (carouselRef.current) {
+                        const animatedValue = carouselRef.current.getScrollPosition();
+                        return animatedBlurStyle(index, animatedValue);
+                    }
+                }}
             />
-
-            {showBlurs ? <Blurs /> : null}
-
-            <SafeAreaView style={styles.blurToggle}>
-                <Switch
-                    onValueChange={(value) => setShowBlurs(value)}
-                    value={showBlurs}
-                />
-            </SafeAreaView>
         </View>
     );
 };
@@ -131,44 +79,41 @@ const Example = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'transparent',
-    },
-    blurContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
+        backgroundColor: '#fff',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'stretch',
-        paddingHorizontal: 20,
     },
-    blurView: {
+    itemContainer: {
+        width: screenWidth - 80,
+        height: screenHeight / 2,
+        borderRadius: 20,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    textContainer: {
         position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
+        bottom: 20,
+        left: 20,
+        right: 20,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+        borderRadius: 10,
     },
-    img: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width,
-    },
-    text: {
+    title: {
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center',
-        margin: 10,
-        color: 'white',
+        color: '#fff',
     },
-    blurToggle: {
-        position: 'absolute',
-        top: 30,
-        right: 10,
-        alignItems: 'flex-end',
+    description: {
+        fontSize: 16,
+        color: '#fff',
     },
 });
 
-export default Example;
+export default BlurParallaxCarousel;

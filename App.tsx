@@ -1,4 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import MyComponent from './src/MyComponent'
 import MyCompJs from './src/MyCompJs'
@@ -12,23 +13,27 @@ import BlurImageEx from './src/BlurImageEx'
 import ExcOffers from './src/ExcOffers'
 import ExcOfferParent from './src/ExcOfferParent'
 import ExclusiveOffersParent from './src/ExclusiveOffersParent'
+import Index from './src/Index';
+import ParallaxEx from './src/ParallaxEx';
+import HorizantalTransacation from './src/HorizantalTransaction';
+import SimpleCarousel from './src/SimpleCarousel';
+import ParallaxCarousel from './src/Index';
+import CuratedCard from './src/CuratedCard';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Text>App</Text> */}
-      {/* <MyComponent></MyComponent> */}
-      {/* <MyCompJs></MyCompJs> */}
-      {/* <UseImageColors></UseImageColors> */}
-      {/* <ImageColorsExample></ImageColorsExample> */}
-      {/* <Colors></Colors> */}
-      {/* <Page></Page> */}
-      {/* <ImgClr></ImgClr> */}
-      {/* <LocalImage></LocalImage> */}
-      {/* <BlurImageEx></BlurImageEx> */}
-      {/* <ExcOfferParent></ExcOfferParent> */}
-      <ExclusiveOffersParent></ExclusiveOffersParent>
-    </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <ScrollView>
+        {/* <ExclusiveOffersParent></ExclusiveOffersParent> */}
+        {/* <Index></Index> */}
+        {/* <ParallaxEx></ParallaxEx> */}
+        {/* <HorizantalTransacation></HorizantalTransacation> */}
+        {/* <SimpleCarousel></SimpleCarousel> */}
+        {/* <ParallaxEx></ParallaxEx> */}
+        <ParallaxCarousel></ParallaxCarousel>
+        <CuratedCard></CuratedCard>
+      </ScrollView>
+    </GestureHandlerRootView>
   )
 }
 
@@ -37,8 +42,5 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: 'white'
   }
 })

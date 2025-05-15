@@ -2,29 +2,38 @@ import { SafeAreaView, StyleSheet, Text, View, Image, Dimensions } from 'react-n
 import React from 'react'
 import { BlurView } from "@react-native-community/blur";
 
-const resortImage = require('../assets/resortImage.jpg')
+const resortImage = require('../assets/TrendingSeason1.png')
 
 const BlurImageEx = () => {
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.imageContainer}>
-                {/* <Text>BlurImage</Text> */}
+        // <SafeAreaView style={styles.container}>
+        //     <View style={styles.imageContainer}>
+        //         {/* <Text>BlurImage</Text> */}
 
+        //         <View>
+        //             <Image source={resortImage} style={{ width: 350, height: 400, }} />
+        //         </View>
+        //         <View style={{ width: 350, height: 200 }}>
+        //             <Image source={resortImage} style={{ width: 350, height: 200 }} />
+        //             <BlurView
+        //                 style={[{ position: 'absolute', width: '100%', height: '100%' }]}
+        //                 blurType="light"
+        //                 blurAmount={100}
+        //                 reducedTransparencyFallbackColor="white"
+        //             />
+
+        //         </View>
+        //     </View>
+
+        // </SafeAreaView>
+        <SafeAreaView>
+            <View>
                 <View>
-                    <Image source={resortImage} style={{ width: 350, height: 400, }} />
-                </View>
-                <View style={{ width: 350, height: 200 }}>
-                    <Image source={resortImage} style={{ width: 350, height: 200 }} />
-                    <BlurView
-                        style={[{ position: 'absolute', width: '100%', height: '100%' }]}
-                        blurType="light"
-                        blurAmount={100}
-                        reducedTransparencyFallbackColor="white"
-                    />
-
+                    {/* image */}
+                    <Image source={resortImage} width={300} height={500} />
+                    <BlurView blurType='dark' style={{ position: 'absolute', bottom: 10, width: 300, height: 100 }} />
                 </View>
             </View>
-
         </SafeAreaView>
     )
 }
